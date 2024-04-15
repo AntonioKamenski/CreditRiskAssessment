@@ -1,0 +1,15 @@
+SVM:
+	{'kernel':['linear','rbf','poly' ], 'degree': np.arrange(1,5), 'C': [0.01,0.1,1,10,100]}.
+KNN:
+	{'n_neighbors': [5, 10, 15, 20],'weights': ['uniform', 'distance'], 'algorithm': ['kd_tree', 'ball_tree', 'brute'], 'leaf_size': [30, 35, 40], 'p': [1,2]}
+RF:
+
+MLP:
+
+DT:
+
+LR:
+
+XGBoost:
+
+GNB:
