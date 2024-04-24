@@ -1,15 +1,37 @@
 SVM:
-	{'kernel':['linear','rbf','poly' ], 'degree': np.arrange(1,5), 'C': [0.01,0.1,1,10,100]}.
+	{'kernel':['linear','rbf','poly' ], 'degree': np.arrange(1,5), 'C': [0.01,0.1,1,10,100]}
 KNN:
 	{'n_neighbors': [5, 10, 15, 20],'weights': ['uniform', 'distance'], 'algorithm': ['kd_tree', 'ball_tree', 'brute'], 'leaf_size': [30, 35, 40], 'p': [1,2]}
 RF:
-
+	{'bootstrap': [True, False], 'max_depth': [10, 30, 50, 70, 90, None], 'max_features': ['auto', 'sqrt'], 'min_samples_leaf': [1, 2, 4], 'min_samples_split': [2, 5, 10], 'n_estimators': [20, 50, 100, 250, 400]}
 MLP:
-
+	{'hidden_layer_sizes': [(50,50,50), (50,100,50), (100,100,100)], 'activation': ['tanh', 'relu', 'identity', 'logistic'], 'solver': ['sgd', 'adam', 'lbfgs'], 'alpha': [0.0001, 0.05], 'learning_rate': ['constant','adaptive']}
 DT:
-
+	{'kernel': ['linear', 'poly', 'rbf', 'sigmoid'), 'degree': [1, 3, 5], 'max_depth': [10, 20, 30, None], 'min_samples_split': [2, 5, 10], 'min_samples_leaf': [1, 2, 4]}
 LR:
-
+	{'kernel': ['newton-cg', 'lbfgs', 'liblinear'], 'degree': np.arange(1, 5), 'C': [100, 10, 1.0, 0.1, 0.01]}
 XGBoost:
-
+	{'n_estimators': [50, 100, 150], 'learning_rate': [0.01, 0.1,, 0.2, 0.3], 'max_depth': [3, 5, 7, 9, 11], 'subsample': [0.8, 0.9, 1.0], 'colsample_bytree': [0.8, 0,9, 1.0]}
 GNB:
+	{'estimator__var_smoothing': [1e-11, 1e-10, 1e-9]}
+
+
+IZMJENE:
+
+
+SVM:
+	{'kernel': ['linear','rbf','poly'], 'degree': np.arrange(1,5), 'C': [0.01,0.1,1,10,100]}
+KNN:
+	{'n_neighbors': np.arrange(1,21,2)}
+RF:
+	{'bootstrap': [True, False], 'max_depth': [10, 30, 50, None], 'n_estimators': [20, 50, 100]}
+MLP:
+	{'hidden_layer_sizes': [(10), (10,10), (10,10,10), (50), (50,50), (50,50,50)], 'activation': ['tanh', 'relu', 'identity', 'logistic'], 'alpha': [0.0001, 0.05]}
+DT:
+	{'criterion': {'gini','entropy','log_loss'}, 'max_depth': [10, 30, 50, None]}
+LR:
+	{'degree': np.arange(1, 5), 'C': [100, 10, 1.0, 0.1, 0.01]}
+XGBoost:
+	{'n_estimators': [50, 100, 150], 'learning_rate': [0.01, 0.1,, 0.2, 0.3], 'max_depth': [3, 5, 7, 9, 11]}
+GNB:
+ - njega ne treba tunati, samo import i fit()
