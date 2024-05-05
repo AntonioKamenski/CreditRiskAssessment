@@ -1,21 +1,29 @@
 import pandas as pd
-
 from sklearn.preprocessing import MinMaxScaler
 
+from ucimlrepo import fetch_ucirepo 
+
 def australian():
-    df = pd.read_csv('datasets/australian.dat', header=None, delimiter='\\s+')
 
-    df.columns = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14', 'A15']
+    statlog_australian_credit_approval = fetch_ucirepo(id=143) 
+    
+    X = statlog_australian_credit_approval.data.features 
+    y = statlog_australian_credit_approval.data.targets 
 
-    categorical_columns = ['A1', 'A4', 'A5', 'A6', 'A8', 'A9', 'A11', 'A12', 'A15']
-    df[categorical_columns] = df[categorical_columns].astype('category')
+    X = pd.DataFrame(X)
+    y = pd.DataFrame(y)
+    
+    int_columns = X.select_dtypes(include=['int64']).columns
+    X[int_columns] = X[int_columns].astype('object')
+
+    X = pd.get_dummies(X, columns=X.select_dtypes(include=['object']).columns)
+
+    y['A15'] = y['A15'].astype('category')
+
+    y = y.values.ravel()
 
     scaler = MinMaxScaler()
-    numerical_columns = ['A2', 'A3', 'A7', 'A10', 'A13', 'A14']
-    df[numerical_columns] = scaler.fit_transform(df[numerical_columns])
+    int_columns = X.select_dtypes(include=['float64']).columns
+    X[int_columns] = scaler.fit_transform(X[int_columns])
 
-    x = df.copy()
-    x = x.drop('A15', axis=1)
-    y = df['A15']
-
-    return x, y
+    return X, y

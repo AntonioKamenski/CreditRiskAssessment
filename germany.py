@@ -1,26 +1,26 @@
 import pandas as pd
-
 from sklearn.preprocessing import MinMaxScaler
 
+from ucimlrepo import fetch_ucirepo 
+
 def german():
+
+    statlog_german_credit_data = fetch_ucirepo(id=144) 
+    
+    X = statlog_german_credit_data.data.features 
+    y = statlog_german_credit_data.data.targets 
+
+    X = pd.DataFrame(X)
+    y = pd.DataFrame(y)
+
+    X = pd.get_dummies(X, columns=X.select_dtypes(include=['object']).columns)
+
+    y['class'] = y['class'].replace({2: 0, 1: 1})
+
+    y = y.values.ravel()
+
     scaler = MinMaxScaler()
+    int_columns = X.select_dtypes(include=['int64']).columns
+    X[int_columns] = scaler.fit_transform(X[int_columns])
 
-    df = pd.read_csv('datasets/german.data', header=None, delimiter='\\s+')
-
-    df.columns = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14', 'A15', 'A16', 'A17', 'A18', 'A19', 'A20', 'A21']
-
-    for col in df.select_dtypes(include=['object']).columns:
-        df[col] = df[col].astype('category')
-
-    df['A21'] = df['A21'].astype('category')
-
-    col = df.select_dtypes(include=['int64']).columns
-    df[col] = scaler.fit_transform(df[col])
-
-    x=df
-    x = x.drop('A21', axis=1)
-    y=df['A21']
-
-    print(df.info())
-
-    return x, y
+    return X, y
