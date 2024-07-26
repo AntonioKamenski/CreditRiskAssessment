@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 from ucimlrepo import fetch_ucirepo 
+from sklearn.preprocessing import LabelEncoder
 
 def german():
 
@@ -13,7 +14,9 @@ def german():
     X = pd.DataFrame(X)
     y = pd.DataFrame(y)
 
-    X = pd.get_dummies(X, columns=X.select_dtypes(include=['object']).columns)
+    encoder = LabelEncoder()
+    for col in X.select_dtypes(include=['object']).columns:
+        X[col] = encoder.fit_transform(X[col])
 
     y['class'] = y['class'].replace({2: 0, 1: 1})
 
