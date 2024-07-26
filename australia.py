@@ -2,7 +2,6 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 from ucimlrepo import fetch_ucirepo 
-from sklearn.preprocessing import LabelEncoder
 
 def australian():
 
@@ -17,16 +16,14 @@ def australian():
     int_columns = X.select_dtypes(include=['int64']).columns
     X[int_columns] = X[int_columns].astype('object')
 
-    encoder = LabelEncoder()
-    for col in X.select_dtypes(include=['object']).columns:
-        X[col] = encoder.fit_transform(X[col])
+    X = pd.get_dummies(X, columns=X.select_dtypes(include=['object']).columns)
 
     y['A15'] = y['A15'].astype('category')
 
     y = y.values.ravel()
 
     scaler = MinMaxScaler()
-    float_columns = X.select_dtypes(include=['float64']).columns
-    X[float_columns] = scaler.fit_transform(X[float_columns])
+    int_columns = X.select_dtypes(include=['float64']).columns
+    X[int_columns] = scaler.fit_transform(X[int_columns])
 
     return X, y
