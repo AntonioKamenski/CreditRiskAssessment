@@ -4,12 +4,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.inspection import permutation_importance
 from sklearn.model_selection import train_test_split
 from sklearn.inspection import PartialDependenceDisplay
-
-import pandas as pd
 import matplotlib.pyplot as plt
 
 def PDP(name, X, y, params):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
 
     model = SVC(**params[0])
     model.fit(X_train, y_train)
@@ -29,9 +28,8 @@ def PDP(name, X, y, params):
     plt.title("Feature Importance using Permutation Importance")
     plt.show()
 
-    #PDP Radi samo s odredjenim parametrima, ne sa svima, testirano jako puno rjesenja, nisa nista uspio naci za popraviti
-    #Parametri za koje radi su vidljivi u Partial Dependence datoteci
-    display = PartialDependenceDisplay.from_estimator(model, X_test, features=X.columns)
+
+    PartialDependenceDisplay.from_estimator(model, X_train, features=X.columns, grid_resolution=100)
     plt.savefig(f'Partial Dependence/PDP {name} SVM.png')
 
     model = RandomForestClassifier(**params[1])
@@ -43,10 +41,10 @@ def PDP(name, X, y, params):
     feature_names = X.columns
 
     plt.figure(figsize=(10, 6))
-    plt.barh(list(feature_importances.keys()), list(feature_importances.values()))
+    plt.barh(X.columns[sorted_idx], perm_importance.importances_mean[sorted_idx])
     plt.xlabel("Permutation Importance")
-    plt.title(f"Feature Importance using Permutation Importance for {name} using Random Forest model.")
-    plt.savefig(f"Permutation Importance/PI for {name} using Random Forest model.")
+    plt.title("Feature Importance using Permutation Importance")
+    plt.show()
 
     display = PartialDependenceDisplay.from_estimator(model, X_test, features=X.columns)
     plt.savefig(f'Partial Dependence/PDP {name} Random Forest.png')
@@ -60,10 +58,10 @@ def PDP(name, X, y, params):
     feature_names = X.columns
 
     plt.figure(figsize=(10, 6))
-    plt.barh(list(feature_importances.keys()), list(feature_importances.values()))
+    plt.barh(X.columns[sorted_idx], perm_importance.importances_mean[sorted_idx])
     plt.xlabel("Permutation Importance")
-    plt.title(f"Feature Importance using Permutation Importance for {name} using Logistic Regression model.")
-    plt.savefig(f"Permutation Importance/PI for {name} using Logistic Regression model.")
+    plt.title("Feature Importance using Permutation Importance")
+    plt.show()
 
     display = PartialDependenceDisplay.from_estimator(model, X_test, features=X.columns)
     plt.savefig(f'Partial Dependence/PDP {name} Logistic Regression.png')
