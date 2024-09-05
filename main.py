@@ -3,12 +3,17 @@ import warnings
 import australia
 from modelAnalisys import modelanalisys
 from bestParams import bestParamsToTxt
+from LRExplainer import LRExplainer
+from TreeInterpreter import RFContributions
 from feature_importance import PDP
 from SHAP import shapValues
+from LIME import lime
 from sklearn.exceptions import ConvergenceWarning
 
 
 warnings.filterwarnings("ignore", category=ConvergenceWarning)
+warnings.filterwarnings("ignore", message="X has feature names, but .* was fitted without feature names")
+
 
 australia_x, australia_y = australia.australian()
 germany_x, germany_y = germany.german()
@@ -38,11 +43,17 @@ germanyParams = [
 featuresAustralia = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14']
 featuresGermany = ['Attribute1', 'Attribute2', 'Attribute3', 'Attribute4', 'Attribute5', 'Attribute6', 'Attribute7', 'Attribute8', 'Attribute9', 'Attribute10', 'Attribute11', 'Attribute12', 'Attribute13', 'Attribute14', 'Attribute15', 'Attribute16', 'Attribute17', 'Attribute18', 'Attribute19', 'Attribute20']
 
-selectedAustralia = ['A2', 'A3', 'A7']
-selectedGermany = ['Attribute2', 'Attribute5', 'Attribute8', 'Attribute11', 'Attribute13', 'Attribute16']
+#PDP("australia", australia_x, australia_y, australianParams)
+#PDP("germany", germany_x, germany_y, germanyParams)
 
-PDP("australia", australia_x, australia_y, australianParams)
-PDP("germany", germany_x, germany_y, germanyParams)
+#shapValues("australia", australia_x, australia_y, featuresAustralia, australianParams)
+#shapValues("germany", germany_x, germany_y, featuresGermany, germanyParams)
 
-shapValues("australia", australia_x, australia_y, featuresAustralia, australianParams)
-shapValues("germany", germany_x, germany_y, featuresGermany, germanyParams)
+#LRExplainer("australia", australia_x, australia_y, featuresAustralia, australianParams[2])
+#LRExplainer("germany", germany_x, germany_y, featuresGermany, australianParams[2])
+
+#RFContributions("australia", australia_x, australia_y, featuresAustralia, australianParams[1]) #Requires python 3.11 or earlier
+#RFContributions("germany", germany_x, germany_y, featuresGermany, australianParams[1]) #Requires python 3.11 or earlier
+
+#lime("australia", australia_x, australia_y, featuresAustralia, australianParams[0])
+#lime("germany", germany_x, germany_y, featuresGermany, australianParams[0])
