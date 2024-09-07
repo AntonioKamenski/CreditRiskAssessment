@@ -45,6 +45,7 @@ def shapValues(name, X, y, original_feature_prefixes, params):
     html_file = f"SHAP/Force/{name} SVM.html"
     shap.save_html(html_file, force_plot)
     
+    plt.subplots_adjust(left=0.25)
     shap.waterfall_plot(explanation[0], show = False)
     plt.savefig(f'SHAP/Waterfall/{name} SVM.png')
     plt.close()
@@ -82,6 +83,7 @@ def shapValues(name, X, y, original_feature_prefixes, params):
     html_file = f"SHAP/Force/{name} RF.html"
     shap.save_html(html_file, force_plot)
 
+    plt.subplots_adjust(left=0.25)
     explanation = shap.Explanation(values=shap_values_class1[0], base_values=explainer.expected_value[1], data=X_test_sample.iloc[0], feature_names=original_feature_prefixes)
     shap.waterfall_plot(explanation, show=False)
     plt.savefig(f'SHAP/Waterfall/{name} RF.png')
@@ -121,6 +123,8 @@ def shapValues(name, X, y, original_feature_prefixes, params):
     html_file = f"SHAP/Force/{name} LR.html"
     shap.save_html(html_file, force_plot)
     
+
+    plt.subplots_adjust(left=0.25)
     shap.waterfall_plot(explanation, show = False)
     plt.savefig(f'SHAP/Waterfall/{name} LR.png')
     plt.close()

@@ -9,6 +9,9 @@ def australian():
     statlog_australian_credit_approval = fetch_ucirepo(id=143) 
     
     X = statlog_australian_credit_approval.data.features 
+
+    print(statlog_australian_credit_approval.items)
+
     y = statlog_australian_credit_approval.data.targets 
 
     X = pd.DataFrame(X)

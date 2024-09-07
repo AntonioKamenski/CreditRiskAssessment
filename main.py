@@ -43,17 +43,20 @@ germanyParams = [
 featuresAustralia = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14']
 featuresGermany = ['Attribute1', 'Attribute2', 'Attribute3', 'Attribute4', 'Attribute5', 'Attribute6', 'Attribute7', 'Attribute8', 'Attribute9', 'Attribute10', 'Attribute11', 'Attribute12', 'Attribute13', 'Attribute14', 'Attribute15', 'Attribute16', 'Attribute17', 'Attribute18', 'Attribute19', 'Attribute20']
 
-#PDP("australia", australia_x, australia_y, australianParams)
-#PDP("germany", germany_x, germany_y, germanyParams)
+featureNamesGermany = ['Account status', 'Duration', 'Credit history', 'Purpose', 'Credit amount', 'Savings', 'Employment', 'Installment rate', 'Personal status and sex', 'Other debtors or guarantors', 'Residence duration', 'Property', 'Age', 'Other installment plans', 'Housing', 'Number of credits', 'Job', 'Number of dependents', 'Telephone', 'Foreign worker']
 
-#shapValues("australia", australia_x, australia_y, featuresAustralia, australianParams)
-#shapValues("germany", germany_x, germany_y, featuresGermany, germanyParams)
+
+#PDP("australia", australia_x, australia_y, australianParams, featuresAustralia)
+#PDP("germany", germany_x, germany_y, germanyParams, featureNamesGermany)
+
+shapValues("australia", australia_x, australia_y, featuresAustralia, australianParams)
+#shapValues("germany", germany_x, germany_y, featureNamesGermany, germanyParams)
 
 #LRExplainer("australia", australia_x, australia_y, featuresAustralia, australianParams[2])
-#LRExplainer("germany", germany_x, germany_y, featuresGermany, australianParams[2])
+#LRExplainer("germany", germany_x, germany_y, featureNamesGermany, australianParams[2])
 
-#RFContributions("australia", australia_x, australia_y, featuresAustralia, australianParams[1]) #Requires python 3.11 or earlier
-#RFContributions("germany", germany_x, germany_y, featuresGermany, australianParams[1]) #Requires python 3.11 or earlier
+#RFContributions("australia", australia_x, australia_y, featuresAustralia, australianParams[1], featuresAustralia) #Requires python 3.11 or earlier
+#RFContributions("germany", germany_x, germany_y, featuresGermany, australianParams[1], featureNamesGermany) #Requires python 3.11 or earlier
 
 #lime("australia", australia_x, australia_y, featuresAustralia, australianParams[0])
-#lime("germany", germany_x, germany_y, featuresGermany, australianParams[0])
+#lime("germany", germany_x, germany_y, featureNamesGermany, australianParams[0])
